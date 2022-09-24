@@ -1,71 +1,30 @@
-# Getting Started with Create React App
+# Github API Test
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+Your task is to develop a single page application that connects to the https://docs.github.com/en/rest and retrieves repository data based on user input.
 
-## Available Scripts
+Upon retrieval you should build an appropriate UI for the data, treating accessibility as a first class citizen.
 
-In the project directory, you can run:
+The UI should display counts for stars, forks, likes, and issues per repository. Links to the repository and the author should be visible and finally, a detailed view whereby we will be
+able to read the readme details.
 
-### `npm start`
+During development we'd ask that you publish your code to a public repository (Github,
+Gitlab or Bitbucket).
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+You should ideally spend no longer than an evening on this test, and your repository should contain a readme detailing your solution, along with any other information you think relevant to support your submission.
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
+### Technical Requirements
 
-### `npm test`
+- The solution must work in a modern browser
+- The code must be pushed to a public repository
+- The readme should contain steps so that we can run your solution locally
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+### System Requirements
 
-### `npm run build`
+The following form a basic set of acceptance criteria for your submission, they are deliberately basic to allow you room to expand in areas you think appropriate.
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
-
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
-
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
-
-### `npm run eject`
-
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
-
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
-
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
-
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
-
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
-
-### Code Splitting
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
-
-### Analyzing the Bundle Size
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
-
-### Making a Progressive Web App
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
-
-### Advanced Configuration
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
-
-### Deployment
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
-
-### `npm run build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
-# get-git
+- Must be a single page application.
+- Must retrieve data from the Github REST API, how you do this is up to you.
+- UI should allow the user various actions on the retrieved data such as search and filtering.
+- Must be able to display the repository name, author and link back to the repository.
+- Must be able to display a more detailed view containing the readme and any additional information you deem necessary.
+-
