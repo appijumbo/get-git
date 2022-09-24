@@ -1,7 +1,21 @@
-import logo from './logo.svg';
-import './App.css';
+import React, { useEffect } from "react";
+import logo from "./logo.svg";
+import "./App.css";
+import { Octokit } from "octokit";
 
 function App() {
+  console.log(process.env.REACT_APP_TOKEN);
+
+  // const octokit = new Octokit({
+  //   auth: process.env.REACT_APP_TOKEN,
+  // });
+
+  // useEffect(() =>  {
+
+  //   const data = await octokit.request("GET /octocat", {});
+
+  // }, )
+
   return (
     <div className="App">
       <header className="App-header">
