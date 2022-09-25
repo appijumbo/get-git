@@ -27,4 +27,32 @@ The following form a basic set of acceptance criteria for your submission, they 
 - UI should allow the user various actions on the retrieved data such as search and filtering.
 - Must be able to display the repository name, author and link back to the repository.
 - Must be able to display a more detailed view containing the readme and any additional information you deem necessary.
+
+### REST API notes
+
+https://api.github.com
+
+/search/users?q={query}{&page,per_page,sort,order}
+
+/search/repositories?q=${repoName}+language:${repoLanguage}&sort=stars&order=desc
+
+Check valid limits
+https://github.com/dead-claudia/github-limits
+
+### Search not using Octkit API
+
+Issues with Authorization using Ocokit. Switching to traditonal fetch as can at least GET open repos using fetch.
+Later figure out issue and switch back to Octokit
+
+Worked in App.js but failed in Search.js Possibly something to do with root?
+
+example
+
+```js
+const { data } = await octokit.request(
+  `GET /search/repositories?q=${repoName}+language:${repoLanguage}&sort=stars&order=desc`,
+  {}
+);
+```
+
 -
