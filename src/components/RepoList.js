@@ -1,4 +1,5 @@
 import React from "react";
+import "./list.css";
 
 const RepoList = ({ list }) => {
   let listObj = list["items"];
@@ -42,7 +43,7 @@ const RepoList = ({ list }) => {
 
   return (
     <>
-      <h1>List</h1>
+      <h1>Repo list</h1>
       {theList}
     </>
   );

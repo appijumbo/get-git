@@ -1,12 +1,7 @@
 import React, { useState, useEffect } from "react";
 import "./search.css";
-// import { Octokit } from "@octokit/rest";
 
 const Search = ({ setList }) => {
-  //   const octokit = new Octokit({
-  //     auth: process.env.REACT_APP_TOKEN,
-  //   });
-
   const [repoName, setRepoName] = useState("");
   const [repoLanguage, setRepoLanguage] = useState("");
 
@@ -24,7 +19,7 @@ const Search = ({ setList }) => {
     })();
   };
 
-  const handleRepoName = (e) => {
+  const handleRepo = (e, setRep) => {
     const name = e.target.value;
     const pattern = /[.A-Za-z0-9_-]/;
     if (pattern.test(name) && name.length <= 39) {
@@ -32,27 +27,19 @@ const Search = ({ setList }) => {
       if (nameArray[name.length - 1] === " ") {
         nameArray.pop();
         nameArray.push("-");
-        setRepoName(nameArray.join(""));
+        setRep(nameArray.join(""));
       } else {
-        setRepoName(name);
+        setRep(name);
       }
     }
   };
 
+  const handleRepoName = (e) => {
+    handleRepo(e, setRepoName);
+  };
+
   const handleRepoLanguage = (e) => {
-    const name = e.target.value;
-    const pattern = /[.A-Za-z0-9_-]/;
-    if (pattern.test(name) && name.length <= 39) {
-      console.log("lang - passed  ", name);
-      let nameArray = name.split("");
-      if (nameArray[name.length - 1] === " ") {
-        nameArray.pop();
-        nameArray.push("-");
-        setRepoLanguage(nameArray.join(""));
-      } else {
-        setRepoLanguage(name);
-      }
-    }
+    handleRepo(e, setRepoLanguage);
   };
 
   return (

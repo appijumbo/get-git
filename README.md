@@ -49,6 +49,15 @@ Worked in App.js but failed in Search.js Possibly something to do with root?
 example
 
 ```js
+import { Octokit } from "@octokit/rest";
+.
+.
+   const octokit = new Octokit({
+ auth: process.env.REACT_APP_TOKEN,
+});
+.
+.
+
 const { data } = await octokit.request(
   `GET /search/repositories?q=${repoName}+language:${repoLanguage}&sort=stars&order=desc`,
   {}
