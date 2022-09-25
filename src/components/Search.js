@@ -48,7 +48,6 @@ const Search = () => {
     if (pattern.test(name) && name.length <= 39) {
       let nameArray = name.split("");
       if (nameArray[name.length - 1] === " ") {
-        // spaces switched to hyphons
         nameArray.pop();
         nameArray.push("-");
         setRepoName(nameArray.join(""));
@@ -59,12 +58,18 @@ const Search = () => {
   };
 
   const handleRepoLanguage = (e) => {
-    const language = e.target.value;
-    const pattern = /[A-Za-z]/;
-    if (pattern.test(language) && language.length <= 39) {
-      setRepoName(language);
+    const name = e.target.value;
+    const pattern = /[A-Za-z._-]/;
+    if (pattern.test(name) && name.length <= 39) {
+      let nameArray = name.split("");
+      if (nameArray[name.length - 1] === " ") {
+        nameArray.pop();
+        nameArray.push("-");
+        setRepoLanguage(nameArray.join(""));
+      } else {
+        setRepoLanguage(name);
+      }
     }
-    setRepoLanguage(e.target.value);
   };
 
   return (
