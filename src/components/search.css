@@ -1,3 +1,6 @@
 .searchWrapper {
-  background-color: aqua;
+  width: 80%;
+  background-color: "#61FF81";
+  color: "#1D438A";
+  border-radius: 20px;
 }
