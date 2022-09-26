@@ -63,5 +63,3 @@ const { data } = await octokit.request(
   {}
 );
 ```
-
--

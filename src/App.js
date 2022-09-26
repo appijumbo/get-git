@@ -6,6 +6,10 @@ import RepoList from "./components/RepoList";
 function App() {
   const [list, setList] = useState({});
 
+  const theSetList = (list) => {
+    setList(list);
+  };
+
   return (
     <div className="pageWrapper">
       <Search setList={setList} />

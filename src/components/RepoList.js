@@ -1,51 +1,69 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import "./list.css";
 
 const RepoList = ({ list }) => {
-  let listObj = list["items"];
-  let listArray = [];
+  // let listObj = list["items"];
+  // let listArray = [];
+  const [theListArray, setTheListArray] = useState([]);
+  const [theOrder, setTheOrder] = useState("asc");
 
-  console.log(listObj);
+  // console.log(listObj);
 
   // https://api.github.com/repos/ReactiveX/RxAndroid/issues?page=0&per_page=1
+  useEffect(() => {
+    let listArray = [];
+    let listObj = list["items"];
+    for (const theRepo in listObj) {
+      (async () => {
+        // const ownerUrl = listObj[theRepo].owner.url;
+        // console.log("ownerUrl  ", ownerUrl);
 
-  for (const theRepo in listObj) {
-    (async () => {
-      const ownerUrl = listObj[theRepo].owner.url;
-      console.log("ownerUrl  ", ownerUrl);
-      //   const getUrl = await fetch(ownerUrl);
-      //   const contentUrl = await getUrl.json();
-      //   const ownerName = await contentUrl.name;
-      //   console.log(ownerName);
+        //   const getUrl = await fetch(ownerUrl);
+        //   const contentUrl = await getUrl.json();
+        //   const ownerName = await contentUrl.name;
+        //   console.log(ownerName);
 
-      let descText = "";
+        let descText = "";
 
-      if (typeof listObj[theRepo].description !== "string") {
-        descText = "";
-      } else if (listObj[theRepo].description.length > 20) {
-        descText = listObj[theRepo].description.substring(0, 20);
-      }
+        if (typeof listObj[theRepo].description !== "string") {
+          descText = "";
+        } else if (listObj[theRepo].description.length > 20) {
+          descText = listObj[theRepo].description.substring(0, 20);
+        }
 
-      listArray.push({
-        node_id: listObj[theRepo].node_id,
-        repoName: listObj[theRepo].name,
-        login: listObj[theRepo].owner.login,
-        html_url: listObj[theRepo].owner.html_url,
-        avatar_url: listObj[theRepo].owner.avatar_url,
-        forks_count: listObj[theRepo].forks_count,
-        description: descText,
-        stargazers_count: listObj[theRepo].stargazers_count,
-        watchers_count: listObj[theRepo].watchers_count,
-        readme:
-          listObj[theRepo].owner.html_url +
-          "/" +
-          listObj[theRepo].name +
-          "#readme",
-      });
-    })();
-  }
+        listArray.push({
+          node_id: listObj[theRepo].node_id,
+          repoName: listObj[theRepo].name,
+          login: listObj[theRepo].owner.login,
+          html_url: listObj[theRepo].owner.html_url,
+          avatar_url: listObj[theRepo].owner.avatar_url,
+          forks_count: listObj[theRepo].forks_count,
+          description: descText,
+          stargazers_count: listObj[theRepo].stargazers_count,
+          watchers_count: listObj[theRepo].watchers_count,
+          readme:
+            listObj[theRepo].owner.html_url +
+            "/" +
+            listObj[theRepo].name +
+            "#readme",
+        });
+      })();
+    }
 
-  const theList = listArray.map((item) => {
+    setTheListArray(listArray);
+  }, [list]);
+
+  const handleListOrder = () => {
+    if (theOrder === "asc") {
+      setTheListArray(theListArray.reverse());
+      setTheOrder("desc");
+    } else {
+      setTheListArray(theListArray.reverse());
+      setTheOrder("asc");
+    }
+  };
+
+  const theList = theListArray.map((item) => {
     return (
       <div key={item.node_id} className="listCard">
         <a href={item.html_url} target="blank" className="imageLink">
@@ -74,6 +92,9 @@ const RepoList = ({ list }) => {
   return (
     <>
       <div className="listWrapper">{theList}</div>
+      <button className="sort" onClick={() => handleListOrder()}>
+        {theOrder}
+      </button>
     </>
   );
 };
