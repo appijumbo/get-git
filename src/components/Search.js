@@ -1,16 +1,30 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import "./search.css";
 
 const Search = ({ setList }) => {
   const [repoName, setRepoName] = useState("");
   const [repoLanguage, setRepoLanguage] = useState("");
+  const [page, setPage] = useState(1);
+
+  useEffect(() => {
+    (async () => {
+      const githubUrl = "https://api.github.com";
+      const gitData = await fetch(
+        `${githubUrl}/search/repositories?q=${repoName}+language:${repoLanguage}&sort=stars&order=desc&per_page=10&page=${page}`
+      );
+      const content = await gitData.json();
+
+      console.log(content);
+      setList(content);
+    })();
+  }, [page]);
 
   const handleRepoSearch = (e) => {
     e.preventDefault();
     (async () => {
       const githubUrl = "https://api.github.com";
       const gitData = await fetch(
-        `${githubUrl}/search/repositories?q=${repoName}+language:${repoLanguage}&sort=stars&order=desc&per_page=100&page=1`
+        `${githubUrl}/search/repositories?q=${repoName}+language:${repoLanguage}&sort=stars&order=desc&per_page=10&page=${page}`
       );
       const content = await gitData.json();
 
@@ -42,8 +56,29 @@ const Search = ({ setList }) => {
     handleRepo(e, setRepoLanguage);
   };
 
+  const handleChangePage = (upDown) => {
+    if (upDown === "up") {
+      setPage((page) => page + 1);
+    }
+    if (upDown === "down" && page !== 1) {
+      setPage((page) => page - 1);
+    }
+    console.log("page has changed  ", page);
+  };
+
+  const PageBlk = () => {
+    return (
+      <div className="pageBlk">
+        <button onClick={() => handleChangePage("down")}>Page Down</button>
+        <div className="pageCount">{page}</div>
+        <button onClick={() => handleChangePage("up")}>Page Up</button>
+      </div>
+    );
+  };
+
   return (
     <div className="searchWrapper">
+      <PageBlk />
       <form onSubmit={handleRepoSearch}>
         <fieldset className="formField">
           <label>
