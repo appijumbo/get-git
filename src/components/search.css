@@ -1,6 +1,21 @@
 .searchWrapper {
-  width: 80%;
-  background-color: "#61FF81";
-  color: "#1D438A";
-  border-radius: 20px;
+  width: 40%;
+  background-color: #61ff81;
+  color: #1d438a;
+  border-radius: 1ch;
+}
+
+.formField {
+  border: none;
+  display: flex;
+  flex-direction: column;
+}
+
+label {
+  margin: 1ch;
+}
+
+button {
+  width: 20ch;
+  margin: 1ch;
 }

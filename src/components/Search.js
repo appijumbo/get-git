@@ -45,10 +45,15 @@ const Search = ({ setList }) => {
   return (
     <div className="searchWrapper">
       <form onSubmit={handleRepoSearch}>
-        <fieldset>
+        <fieldset className="formField">
           <label>
             Repo Name
-            <input type="text" value={repoName} onChange={handleRepoName} />
+            <input
+              type="text"
+              value={repoName}
+              onChange={handleRepoName}
+              placeholder="pop-os"
+            />
           </label>
           <label>
             Language
@@ -56,6 +61,7 @@ const Search = ({ setList }) => {
               type="text"
               value={repoLanguage}
               onChange={handleRepoLanguage}
+              placeholder="javascript"
             />
           </label>
           <button type="submit">Search Repo</button>
