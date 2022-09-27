@@ -30,6 +30,12 @@ const RepoList = ({ list }) => {
           descText = listObj[theRepo].description.substring(0, 20);
         }
 
+        const readme =
+          listObj[theRepo].owner.html_url +
+          "/" +
+          listObj[theRepo].name +
+          "#readme";
+
         listArray.push({
           node_id: listObj[theRepo].node_id,
           repoName: listObj[theRepo].name,
@@ -40,17 +46,14 @@ const RepoList = ({ list }) => {
           description: descText,
           stargazers_count: listObj[theRepo].stargazers_count,
           watchers_count: listObj[theRepo].watchers_count,
-          readme:
-            listObj[theRepo].owner.html_url +
-            "/" +
-            listObj[theRepo].name +
-            "#readme",
+          readme: readme,
           favourite: false,
         });
       })();
     }
 
     setTheCurrentListArray(listArray);
+    console.table(listArray);
   }, [list]);
 
   const handleListOrder = () => {
@@ -67,8 +70,6 @@ const RepoList = ({ list }) => {
     let currentList = theCurrentListArray.map((repo) => {
       if (repo.node_id === e.target.id) {
         repo.favourite ? (repo.favourite = false) : (repo.favourite = true);
-
-        //repo.favourite = true;
       }
       return repo;
     });
@@ -91,6 +92,10 @@ const RepoList = ({ list }) => {
       setThePageListArray(theCurrentListArray);
       setTheCurrentListArray(theFavListArray);
     }
+  };
+
+  const handleReadmeModal = (readmeurl) => {
+    console.log(readmeurl);
   };
 
   const theList = theCurrentListArray.map((item) => {
@@ -123,7 +128,14 @@ const RepoList = ({ list }) => {
           <li className="listName">{item.repoName}</li>
           <li className="listLogin">{item.login}</li>
           <li className="listDescripion">{item.description}</li>
-          {/* README needs to be a modal */}
+          <li>
+            <button
+              className="readmeModal"
+              onClick={() => handleReadmeModal(item.readme)}
+            >
+              Readme
+            </button>
+          </li>
         </ul>
         <div className="starCount">
           <div>Stars {item.stargazers_count}</div>
