@@ -1,8 +1,6 @@
+@import "./colors.css";
+
 .listWrapper {
-  /* display: flex;
-  flex-direction: column;
-  align-items: center;
-  width: 100%; */
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -16,36 +14,37 @@
 .listCard {
   display: flex;
   flex-direction: row;
-  background-color: #7f39bd;
-  color: #ffea2b;
+  background-color: var(--purple-color);
+  color: var(--yellow-color);
   width: 50%;
-  height: 20ch;
+  height: auto;
   margin-top: 5vh;
   border-radius: 50px;
 }
 
 .repoAvatar {
-  width: 100px;
-  height: 100px;
+  width: 90%;
+  height: 90%;
   border-radius: 50%;
   border-width: 2px;
-  border-color: #eeeeee;
+  border-color: var(--white-color);
   border-style: solid;
   transition: 0.3s;
 }
 .repoAvatar:hover {
-  width: 110px;
-  height: 110px;
+  width: 100%;
+  height: 100%;
 }
 
 .imageLink {
-  margin: 0 2ch;
   display: flex;
   flex-direction: column;
   justify-content: center;
-  color: #ffea2b;
-  margin: 5ch;
+  color: var(--yellow-color);
+  margin: 0;
   align-items: center;
+  height: 20ch;
+  width: 20ch;
 }
 
 li {
@@ -74,7 +73,19 @@ ul {
 button {
   width: 20ch;
   margin: 1ch;
+  font-weight: bold;
+  font-size: 16px;
 }
+
+button[type="submit"] {
+  font-weight: 300;
+  font-size: medium;
+}
+
+.formField > label {
+  padding: 1ch;
+}
+
 .reverseOrder {
   display: flex;
   flex-direction: row;
@@ -83,19 +94,63 @@ button {
   bottom: 2vw;
   right: 10vw;
 }
+
 .reverseOrder > button,
-.sort > button {
-  background-color: #1d438a;
-  color: #61ff81;
+.sort,
+.filterFavs {
+  background-color: var(--blue-color);
+  color: var(--green-color);
   width: 100px;
   height: 100px;
   border-radius: 50%;
   border-width: 5px;
-  border-color: #61ff81;
+  border-color: var(--green-color);
 }
 
-.sort > button {
+.sort {
   position: absolute;
   bottom: 5vh;
   right: 10vw;
+}
+
+.filterFavs {
+  position: absolute;
+  bottom: 5vh;
+  left: 10vw;
+}
+
+.bottomGroup {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+}
+
+.leftGroup {
+  margin: 3ch;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  align-items: flex-start;
+}
+
+.favRepo {
+  width: 3ch;
+  margin: 1ch;
+  z-index: 5;
+  background-color: var(--yellow-color);
+  color: var(--brown-color);
+  border: none;
+  border-radius: 10ch;
+  height: 3ch;
+  transition: 0.3s;
+}
+
+.favRepo:hover {
+  background-color: var(--yellow-color);
+  height: 4ch;
+  width: 4ch;
+}
+
+.listHtmlUrl {
+  color: var(--yellow-color);
 }

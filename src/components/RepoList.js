@@ -4,8 +4,11 @@ import "./list.css";
 const RepoList = ({ list }) => {
   // let listObj = list["items"];
   // let listArray = [];
-  const [theListArray, setTheListArray] = useState([]);
+  const [theCurrentListArray, setTheCurrentListArray] = useState([]);
+  const [thePageListArray, setThePageListArray] = useState([]);
+  const [theFavListArray, setTheFavListArray] = useState([]);
   const [theOrder, setTheOrder] = useState("asc");
+  const [favs, setFavs] = useState(false);
 
   // console.log(listObj);
 
@@ -46,34 +49,73 @@ const RepoList = ({ list }) => {
             "/" +
             listObj[theRepo].name +
             "#readme",
+          favourite: false,
         });
       })();
     }
 
-    setTheListArray(listArray);
+    setTheCurrentListArray(listArray);
   }, [list]);
 
   const handleListOrder = () => {
     if (theOrder === "asc") {
-      setTheListArray(theListArray.reverse());
+      setTheCurrentListArray(theCurrentListArray.reverse());
       setTheOrder("desc");
     } else {
-      setTheListArray(theListArray.reverse());
+      setTheCurrentListArray(theCurrentListArray.reverse());
       setTheOrder("asc");
     }
   };
 
-  const theList = theListArray.map((item) => {
+  const handleFav = (e) => {
+    let currentList = theCurrentListArray.map((repo) => {
+      if (repo.node_id === e.target.id) {
+        repo.favourite = true;
+      }
+      return repo;
+    });
+
+    setTheCurrentListArray(currentList);
+
+    const favList = theCurrentListArray.filter((repo) => {
+      console.log("repo.favourite  ", repo.favourite);
+      return repo.favourite === true;
+    });
+    setTheFavListArray(favList);
+  };
+
+  const handleFilterFavs = () => {
+    if (favs) {
+      setFavs(false);
+      setTheCurrentListArray(thePageListArray);
+    } else {
+      setFavs(true);
+
+      setThePageListArray(theCurrentListArray);
+      setTheCurrentListArray(theFavListArray);
+    }
+  };
+
+  const theList = theCurrentListArray.map((item) => {
     return (
       <div key={item.node_id} className="listCard">
-        <a href={item.html_url} target="blank" className="imageLink">
-          <img
-            src={item.avatar_url}
-            alt={item.repoName}
-            className="repoAvatar"
-          />
-          <div className="listHtmlUrl">{item.html_url}</div>
-        </a>
+        <div className="leftGroup">
+          <a href={item.html_url} target="blank" className="imageLink">
+            <img
+              src={item.avatar_url}
+              alt={item.repoName}
+              className="repoAvatar"
+            />
+          </a>
+          <div className="bottomGroup">
+            <a href={item.html_url} target="blank" className="listHtmlUrl">
+              {item.html_url}
+            </a>
+            <button className="favRepo" onClick={handleFav} id={item.node_id}>
+              F
+            </button>
+          </div>
+        </div>
         <ul>
           <li className="listName">{item.repoName}</li>
           <li className="listLogin">{item.login}</li>
@@ -94,6 +136,9 @@ const RepoList = ({ list }) => {
       <div className="listWrapper">{theList}</div>
       <button className="sort" onClick={() => handleListOrder()}>
         {theOrder}
+      </button>
+      <button className="filterFavs" onClick={() => handleFilterFavs()}>
+        Favs
       </button>
     </>
   );
