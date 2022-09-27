@@ -1,4 +1,4 @@
-@import "./colors.css";
+@import "./constants.css";
 
 .listWrapper {
   display: flex;
@@ -9,6 +9,7 @@
   height: 70vh;
   margin-top: 20vh;
   margin-bottom: 5vh;
+  background-color: var(--grey-background);
 }
 
 .listCard {
@@ -50,23 +51,35 @@
 li {
   list-style: none;
   width: 25ch;
+  display: flex;
+  flex-direction: column;
+  font-size: 20px;
+}
+
+li > span {
+  color: white;
+  font-size: 16px;
 }
 
 .starCount {
-  text-align: center;
+  text-align: right;
   display: flex;
   flex-direction: column;
   justify-content: space-between;
   height: 50%;
-  margin: auto;
+  margin: auto 0;
+  margin: auto 5%;
+  width: 20%;
 }
 
 ul {
   display: flex;
   flex-direction: column;
   justify-content: space-between;
-  height: 50%;
+  height: 70%;
   margin: auto 0;
+  padding: 0;
+  width: 40%;
 }
 
 button {
@@ -130,12 +143,13 @@ button[type="submit"] {
   flex-direction: column;
   justify-content: flex-end;
   align-items: flex-start;
+  width: 40%;
 }
 
 .favRepo {
   width: 3ch;
   margin: 1ch;
-  z-index: 5;
+  z-index: 0;
   background-color: var(--yellow-color);
   color: var(--brown-color);
   border: none;
@@ -152,4 +166,50 @@ button[type="submit"] {
 
 .listHtmlUrl {
   color: var(--yellow-color);
+}
+
+.readmeModal {
+  margin: 1ch 0 0 0;
+}
+
+/* .ReactModal__Content.ReactModal__Content--after-open {
+  display: flex;
+  flex-direction: column;
+  border: 5px solid #bbbbbb;
+  background: #dddddd;
+  overflow: auto;
+  border-radius: 10px;
+  padding: 30px;
+} */
+
+html
+  body.ReactModal__Body--open
+  div.ReactModalPortal
+  div.ReactModal__Overlay.ReactModal__Overlay--after-open
+  div.ReactModal__Content.ReactModal__Content--after-open {
+  display: flex;
+  flex-direction: column;
+  border: 5px solid #bbbbbb;
+  background: #dddddd;
+  overflow: auto;
+  border-radius: 10px;
+  padding: 30px;
+}
+
+.ReactModal__Content > button {
+  width: 5ch;
+  height: 5ch;
+  margin: 1ch;
+  font-weight: bold;
+  font-size: 18px;
+  border-radius: 50%;
+  border: 3px solid;
+  background-color: #bbbbbb;
+  color: #444444;
+  transition: all 0.5s;
+  margin: 0 0 0 auto;
+}
+
+.ReactModal__Content > button:hover {
+  transform: scale(1.1);
 }

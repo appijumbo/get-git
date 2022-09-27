@@ -1,8 +1,14 @@
 :root {
   --yellow-color: #ffc400;
   --purple-color: #7f39bd;
-  --white-color: ##eeeeee;
+  --white-color: ##dddddd;
   --blue-color: #1d438a;
   --green-color: #61ff81;
   --brown-color: #570000;
+  --grey-background: #e1e1e1;
+
+  --top: 100;
+  --middle: -1;
+  --lower: -10;
+  --lowest: -100;
 }

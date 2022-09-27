@@ -6,33 +6,29 @@ const Search = ({ setList }) => {
   const [repoLanguage, setRepoLanguage] = useState("");
   const [page, setPage] = useState(1);
 
-  useEffect(() => {
-    (async () => {
-      try {
-        const githubUrl = "https://api.github.com";
-        const gitData = await fetch(
-          `${githubUrl}/search/repositories?q=${repoName}+language:${repoLanguage}&sort=stars&order=desc&per_page=10&page=${page}`
-        );
-        const content = await gitData.json();
-        setList(content);
-      } catch (e) {
-        console.log("error getting gitHubData -->", e);
+  const getData = async () => {
+    const githubUrl = "https://api.github.com";
+    const gitData = await fetch(
+      `${githubUrl}/search/repositories?q=${repoName}+language:${repoLanguage}&sort=stars&order=desc&per_page=10&page=${page}`,
+      {
+        headers: {
+          authorization: process.env.REACT_APP_TOKEN,
+        },
       }
-    })();
+    );
+    const content = await gitData.json();
+
+    console.log(content);
+    setList(content);
+  };
+
+  useEffect(() => {
+    getData();
   }, [page]);
 
   const handleRepoSearch = (e) => {
     e.preventDefault();
-    (async () => {
-      const githubUrl = "https://api.github.com";
-      const gitData = await fetch(
-        `${githubUrl}/search/repositories?q=${repoName}+language:${repoLanguage}&sort=stars&order=desc&per_page=10&page=${page}`
-      );
-      const content = await gitData.json();
-
-      console.log(content);
-      setList(content);
-    })();
+    getData();
   };
 
   const handleRepo = (e, setRep) => {
@@ -89,7 +85,7 @@ const Search = ({ setList }) => {
               type="text"
               value={repoName}
               onChange={handleRepoName}
-              placeholder="pop-os"
+              placeholder="pop-os/pop"
             />
           </label>
           <label>

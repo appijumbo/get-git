@@ -1,4 +1,4 @@
-@import "./colors.css";
+@import "./constants.css";
 
 .searchWrapper {
   width: 40%;
@@ -15,7 +15,15 @@
 }
 
 label {
-  margin: 1ch;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+  width: 70%;
+}
+
+.formField label {
+  padding: 1ch 0 1ch 2ch;
 }
 
 button {

@@ -1,6 +1,9 @@
 import React, { useState, useEffect } from "react";
 import { Buffer } from "buffer";
 import "./list.css";
+import Modal from "react-modal";
+
+Modal.setAppElement("#root");
 
 const RepoList = ({ list }) => {
   const [theCurrentListArray, setTheCurrentListArray] = useState([]);
@@ -9,8 +12,9 @@ const RepoList = ({ list }) => {
   const [theOrder, setTheOrder] = useState("asc");
   const [favs, setFavs] = useState(false);
 
-  //*TEMP - remove later
-  const [theReadmeurl, setTheReadmeUrl] = useState("");
+  // const [readmeModal, setReadmeModal] = useState("closed");
+  const [isOpen, setIsOpen] = useState(false);
+  const [readmeText, setReadmeText] = useState("-- No Text --");
 
   // https://api.github.com/repos/ReactiveX/RxAndroid/issues?page=0&per_page=1
   useEffect(() => {
@@ -18,17 +22,6 @@ const RepoList = ({ list }) => {
     let listObj = list["items"];
     for (const theRepo in listObj) {
       (async () => {
-        // const ownerUrl = listObj[theRepo].owner.url;
-        // console.log("ownerUrl  ", ownerUrl);
-
-        //   const getUrl = await fetch(ownerUrl);
-        //   const contentUrl = await getUrl.json();
-        //   const ownerName = await contentUrl.name;
-        //   console.log(ownerName);
-
-        // console.log("------------repo  data ---------");
-        // console.log(listObj[theRepo]);
-        // console.log("---------------------");
         let descText = "";
 
         if (typeof listObj[theRepo].description !== "string") {
@@ -58,7 +51,6 @@ const RepoList = ({ list }) => {
     }
 
     setTheCurrentListArray(listArray);
-    console.table(listArray);
   }, [list]);
 
   const handleListOrder = () => {
@@ -99,22 +91,27 @@ const RepoList = ({ list }) => {
     }
   };
 
-  const handleReadmeModal = async (readmeurl) => {
-    setTheReadmeUrl(readmeurl);
+  const toggleModal = async (readmeurl) => {
+    console.log("README PRESSED");
+    setIsOpen(!isOpen);
+    console.log("*****************************");
+    console.log("modal isOpen  ", isOpen);
+    ///repos/{owner}/{repo}/readme
+    const theUrl = "https://api.github.com";
+    const theReadmeEndpoint = `/repos/${readmeurl}/readme`;
     try {
-      ///repos/{owner}/{repo}/readme
-      const theUrl = "https://api.github.com";
-      const theReadmeEndpoint = `/repos/${readmeurl}/readme`;
       const data = await fetch(theUrl + theReadmeEndpoint);
       const theJson = await data.json();
       const base64theContent = await theJson.content.toString();
       const buff = Buffer.from(base64theContent, "base64");
-      const readmeText = buff.toString("utf-8");
+      setReadmeText(buff.toString("utf-8"));
       console.log("*************************************");
       console.log(readmeText);
       console.log("*************************************");
     } catch (e) {
-      console.log("error in readme fetch --> ", e);
+      console.log("No readme found");
+      setReadmeText("-- No Text --");
+      console.log("modal isOpen  ", isOpen);
     }
   };
 
@@ -145,13 +142,19 @@ const RepoList = ({ list }) => {
           </div>
         </div>
         <ul>
-          <li className="listName">{item.repoName}</li>
-          <li className="listLogin">{item.login}</li>
-          <li className="listDescripion">{item.description}</li>
+          <li className="listLogin">
+            Owner <span>{item.login}</span>
+          </li>
+          <li className="listName">
+            Repo Name<span>{item.repoName}</span>
+          </li>
+          <li className="listDescripion">
+            Description<span>{item.description}</span>
+          </li>
           <li>
             <button
               className="readmeModal"
-              onClick={() => handleReadmeModal(item.readme)}
+              onClick={() => toggleModal(item.readme)}
             >
               Readme
             </button>
@@ -161,6 +164,7 @@ const RepoList = ({ list }) => {
           <div>Stars {item.stargazers_count}</div>
           <div>Forks {item.forks_count}</div>
           <div>Watchers {item.watchers_count}</div>
+          <div>Issues {item.open_issues_count}</div>
         </div>
       </div>
     );
@@ -168,9 +172,14 @@ const RepoList = ({ list }) => {
 
   return (
     <>
-      {/* {theReadmeurl !== "" ? (
-        <iframe src={theReadmeurl} title="theReadme"></iframe>
-      ) : null} */}
+      <Modal
+        isOpen={isOpen}
+        onRequestClose={toggleModal}
+        contentLabel="README content"
+      >
+        <button onClick={toggleModal}>X</button>
+        {readmeText}
+      </Modal>
       <div className="listWrapper">{theList}</div>
       <button className="sort" onClick={() => handleListOrder()}>
         {theOrder}
