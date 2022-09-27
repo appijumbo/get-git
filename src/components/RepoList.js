@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react";
+import { Buffer } from "buffer";
 import "./list.css";
 
 const RepoList = ({ list }) => {
@@ -7,6 +8,9 @@ const RepoList = ({ list }) => {
   const [theFavListArray, setTheFavListArray] = useState([]);
   const [theOrder, setTheOrder] = useState("asc");
   const [favs, setFavs] = useState(false);
+
+  //*TEMP - remove later
+  const [theReadmeurl, setTheReadmeUrl] = useState("");
 
   // https://api.github.com/repos/ReactiveX/RxAndroid/issues?page=0&per_page=1
   useEffect(() => {
@@ -22,6 +26,9 @@ const RepoList = ({ list }) => {
         //   const ownerName = await contentUrl.name;
         //   console.log(ownerName);
 
+        // console.log("------------repo  data ---------");
+        // console.log(listObj[theRepo]);
+        // console.log("---------------------");
         let descText = "";
 
         if (typeof listObj[theRepo].description !== "string") {
@@ -31,10 +38,7 @@ const RepoList = ({ list }) => {
         }
 
         const readme =
-          listObj[theRepo].owner.html_url +
-          "/" +
-          listObj[theRepo].name +
-          "#readme";
+          listObj[theRepo].owner.login + "/" + listObj[theRepo].name;
 
         listArray.push({
           node_id: listObj[theRepo].node_id,
@@ -46,6 +50,7 @@ const RepoList = ({ list }) => {
           description: descText,
           stargazers_count: listObj[theRepo].stargazers_count,
           watchers_count: listObj[theRepo].watchers_count,
+          open_issues_count: listObj[theRepo].open_issues_count,
           readme: readme,
           favourite: false,
         });
@@ -94,8 +99,23 @@ const RepoList = ({ list }) => {
     }
   };
 
-  const handleReadmeModal = (readmeurl) => {
-    console.log(readmeurl);
+  const handleReadmeModal = async (readmeurl) => {
+    setTheReadmeUrl(readmeurl);
+    try {
+      ///repos/{owner}/{repo}/readme
+      const theUrl = "https://api.github.com";
+      const theReadmeEndpoint = `/repos/${readmeurl}/readme`;
+      const data = await fetch(theUrl + theReadmeEndpoint);
+      const theJson = await data.json();
+      const base64theContent = await theJson.content.toString();
+      const buff = Buffer.from(base64theContent, "base64");
+      const readmeText = buff.toString("utf-8");
+      console.log("*************************************");
+      console.log(readmeText);
+      console.log("*************************************");
+    } catch (e) {
+      console.log("error in readme fetch --> ", e);
+    }
   };
 
   const theList = theCurrentListArray.map((item) => {
@@ -148,6 +168,9 @@ const RepoList = ({ list }) => {
 
   return (
     <>
+      {/* {theReadmeurl !== "" ? (
+        <iframe src={theReadmeurl} title="theReadme"></iframe>
+      ) : null} */}
       <div className="listWrapper">{theList}</div>
       <button className="sort" onClick={() => handleListOrder()}>
         {theOrder}

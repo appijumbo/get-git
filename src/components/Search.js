@@ -8,14 +8,16 @@ const Search = ({ setList }) => {
 
   useEffect(() => {
     (async () => {
-      const githubUrl = "https://api.github.com";
-      const gitData = await fetch(
-        `${githubUrl}/search/repositories?q=${repoName}+language:${repoLanguage}&sort=stars&order=desc&per_page=10&page=${page}`
-      );
-      const content = await gitData.json();
-
-      console.log(content);
-      setList(content);
+      try {
+        const githubUrl = "https://api.github.com";
+        const gitData = await fetch(
+          `${githubUrl}/search/repositories?q=${repoName}+language:${repoLanguage}&sort=stars&order=desc&per_page=10&page=${page}`
+        );
+        const content = await gitData.json();
+        setList(content);
+      } catch (e) {
+        console.log("error getting gitHubData -->", e);
+      }
     })();
   }, [page]);
 
