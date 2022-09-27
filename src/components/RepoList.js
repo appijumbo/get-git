@@ -2,15 +2,11 @@ import React, { useState, useEffect } from "react";
 import "./list.css";
 
 const RepoList = ({ list }) => {
-  // let listObj = list["items"];
-  // let listArray = [];
   const [theCurrentListArray, setTheCurrentListArray] = useState([]);
   const [thePageListArray, setThePageListArray] = useState([]);
   const [theFavListArray, setTheFavListArray] = useState([]);
   const [theOrder, setTheOrder] = useState("asc");
   const [favs, setFavs] = useState(false);
-
-  // console.log(listObj);
 
   // https://api.github.com/repos/ReactiveX/RxAndroid/issues?page=0&per_page=1
   useEffect(() => {
@@ -70,7 +66,9 @@ const RepoList = ({ list }) => {
   const handleFav = (e) => {
     let currentList = theCurrentListArray.map((repo) => {
       if (repo.node_id === e.target.id) {
-        repo.favourite = true;
+        repo.favourite ? (repo.favourite = false) : (repo.favourite = true);
+
+        //repo.favourite = true;
       }
       return repo;
     });
@@ -78,7 +76,6 @@ const RepoList = ({ list }) => {
     setTheCurrentListArray(currentList);
 
     const favList = theCurrentListArray.filter((repo) => {
-      console.log("repo.favourite  ", repo.favourite);
       return repo.favourite === true;
     });
     setTheFavListArray(favList);
@@ -98,7 +95,13 @@ const RepoList = ({ list }) => {
 
   const theList = theCurrentListArray.map((item) => {
     return (
-      <div key={item.node_id} className="listCard">
+      <div
+        key={item.node_id}
+        className="listCard"
+        style={{
+          backgroundColor: item.favourite ? "red" : null,
+        }}
+      >
         <div className="leftGroup">
           <a href={item.html_url} target="blank" className="imageLink">
             <img
