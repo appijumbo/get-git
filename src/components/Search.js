@@ -13,12 +13,12 @@ const Search = ({ setList }) => {
   const getData = async () => {
     const githubUrl = "https://api.github.com";
     const gitData = await fetch(
-      `${githubUrl}/search/repositories?q=${repoName}+language:${repoLanguage}&sort=stars&order=desc&per_page=10&page=${page}`,
-      {
-        headers: {
-          authorization: process.env.REACT_APP_TOKEN,
-        },
-      }
+      `${githubUrl}/search/repositories?q=${repoName}+language:${repoLanguage}&sort=stars&order=desc&per_page=10&page=${page}`
+      // {
+      //   headers: {
+      //     authorization: process.env.REACT_APP_TOKEN,
+      //   },
+      // }
     );
     const content = await gitData.json();
     setList(content);

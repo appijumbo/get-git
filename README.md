@@ -83,12 +83,19 @@ However this was set to desktop only, as mobile not yet implemented
 
 #### Search not using Octkit API
 
-Issues with Authorization using Ocokit. Switching to traditional fetch as can at least GET open repos using fetch.
-Later figure out issue and switch back to Octokit
+Issues with Authorization using Ocokit. Worked in App.js but failed in Search.js
+Rather than spemd time finding API issue focused on building the app by using traditional fetch as can at least GET open repos using fetch.
 
-Worked in App.js but failed in Search.js Possibly something to do with root?
+NOTE: get a token from GitHub and save this as into a file at root of project called .env
+eg
 
-example
+.env
+
+```
+REACT_APP_TOKEN="your_token_string_goes_here"
+```
+
+and use via
 
 ```js
 import { Octokit } from "@octokit/rest";
@@ -106,7 +113,8 @@ const { data } = await octokit.request(
 );
 ```
 
-Later experimented with authorization token on the fetch
+Later experimented with authorization token in the header on the fetch in `<Search />`
+NOTE: This is commented out in case this creates issues for others installiing without a token
 
 ### Outstanding bugs
 
