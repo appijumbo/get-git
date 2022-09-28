@@ -2,6 +2,8 @@ import React, { useState, useEffect } from "react";
 import { Buffer } from "buffer";
 import "./list.css";
 import Modal from "react-modal";
+import htmlToFormattedText from "html-to-formatted-text";
+import MarkdownIt from "markdown-it";
 
 Modal.setAppElement("#root");
 
@@ -92,10 +94,8 @@ const RepoList = ({ list }) => {
   };
 
   const toggleModal = async (readmeurl) => {
-    console.log("README PRESSED");
     setIsOpen(!isOpen);
-    console.log("*****************************");
-    console.log("modal isOpen  ", isOpen);
+
     ///repos/{owner}/{repo}/readme
     const theUrl = "https://api.github.com";
     const theReadmeEndpoint = `/repos/${readmeurl}/readme`;
@@ -104,14 +104,18 @@ const RepoList = ({ list }) => {
       const theJson = await data.json();
       const base64theContent = await theJson.content.toString();
       const buff = Buffer.from(base64theContent, "base64");
-      setReadmeText(buff.toString("utf-8"));
-      console.log("*************************************");
-      console.log(readmeText);
-      console.log("*************************************");
+      const md = new MarkdownIt();
+      const markdownText = md.render(buff.toString("utf-8"));
+      const htmlToText = htmlToFormattedText(markdownText);
+      setReadmeText(htmlToText);
+      //
+      // const documentText = await richTextFromMarkdown(buff.toString("utf-8"));
+      // setReadmeText(documentText);
+      //
+      //
+      //setReadmeText(buff.toString("utf-8"));
     } catch (e) {
-      console.log("No readme found");
       setReadmeText("-- No Text --");
-      console.log("modal isOpen  ", isOpen);
     }
   };
 
