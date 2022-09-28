@@ -1,6 +1,10 @@
 import React, { useState, useEffect } from "react";
 import "./search.css";
 
+/****************************************************************
+ * Form for repo owner and name with page number fetches the data
+ * and passes the data up to App component.
+ ****************************************************************/
 const Search = ({ setList }) => {
   const [repoName, setRepoName] = useState("");
   const [repoLanguage, setRepoLanguage] = useState("");
@@ -17,11 +21,10 @@ const Search = ({ setList }) => {
       }
     );
     const content = await gitData.json();
-
-    console.table(content.items);
     setList(content);
   };
 
+  // Page change needs refreshing
   useEffect(() => {
     getData();
   }, [page]);
@@ -61,7 +64,6 @@ const Search = ({ setList }) => {
     if (upDown === "down" && page !== 1) {
       setPage((page) => page - 1);
     }
-    console.log("page has changed  ", page);
   };
 
   const PageBlk = () => {

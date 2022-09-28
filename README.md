@@ -114,7 +114,14 @@ I wanted the list to refresh on page change hence I used a useEffect, but this h
 
 Likewise the form entry dosnt allow the last character to be deleted. Unsure why this is?
 
+### Modal as Seperate Compnent
+
+For future, it may be sensible to put the modal in its own component
+
 ### REST API notes
+
+REST endpoints
+https://docs.github.com/en/rest/overview/endpoints-available-for-github-apps
 
 https://api.github.com
 

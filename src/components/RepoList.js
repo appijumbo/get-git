@@ -8,6 +8,11 @@ import MarkdownIt from "markdown-it";
 
 Modal.setAppElement("#root");
 
+/****************************************************************
+ * Passed data object va App. Only required data is removed
+ * and an array of objects is built.
+ * Array is then manipulated to allow for user UI changes
+ ****************************************************************/
 const RepoList = ({ list }) => {
   const [theCurrentListArray, setTheCurrentListArray] = useState([]);
   const [thePageListArray, setThePageListArray] = useState([]);
