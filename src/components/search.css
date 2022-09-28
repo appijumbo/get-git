@@ -16,10 +16,8 @@
 
 label {
   display: flex;
-  flex-direction: row;
-  align-items: center;
-  justify-content: space-between;
-  width: 70%;
+  flex-direction: column;
+  width: 40%;
 }
 
 .formField label {
@@ -55,4 +53,8 @@ button {
   position: relative;
   left: 15vw;
   margin: auto;
+}
+
+form {
+  margin-left: 5%;
 }

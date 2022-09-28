@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { Buffer } from "buffer";
 import "./list.css";
+import "./modal.css";
 import Modal from "react-modal";
 import htmlToFormattedText from "html-to-formatted-text";
 import MarkdownIt from "markdown-it";
@@ -14,11 +15,9 @@ const RepoList = ({ list }) => {
   const [theOrder, setTheOrder] = useState("asc");
   const [favs, setFavs] = useState(false);
 
-  // const [readmeModal, setReadmeModal] = useState("closed");
   const [isOpen, setIsOpen] = useState(false);
   const [readmeText, setReadmeText] = useState("-- No Text --");
 
-  // https://api.github.com/repos/ReactiveX/RxAndroid/issues?page=0&per_page=1
   useEffect(() => {
     let listArray = [];
     let listObj = list["items"];
@@ -96,7 +95,6 @@ const RepoList = ({ list }) => {
   const toggleModal = async (readmeurl) => {
     setIsOpen(!isOpen);
 
-    ///repos/{owner}/{repo}/readme
     const theUrl = "https://api.github.com";
     const theReadmeEndpoint = `/repos/${readmeurl}/readme`;
     try {
@@ -108,12 +106,6 @@ const RepoList = ({ list }) => {
       const markdownText = md.render(buff.toString("utf-8"));
       const htmlToText = htmlToFormattedText(markdownText);
       setReadmeText(htmlToText);
-      //
-      // const documentText = await richTextFromMarkdown(buff.toString("utf-8"));
-      // setReadmeText(documentText);
-      //
-      //
-      //setReadmeText(buff.toString("utf-8"));
     } catch (e) {
       setReadmeText("-- No Text --");
     }

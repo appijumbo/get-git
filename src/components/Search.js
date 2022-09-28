@@ -18,7 +18,7 @@ const Search = ({ setList }) => {
     );
     const content = await gitData.json();
 
-    console.log(content);
+    console.table(content.items);
     setList(content);
   };
 
