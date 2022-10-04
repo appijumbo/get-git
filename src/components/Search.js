@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import "./search.css";
 
 /****************************************************************
@@ -9,6 +9,9 @@ const Search = ({ setList }) => {
   const [repoName, setRepoName] = useState("");
   const [repoLanguage, setRepoLanguage] = useState("");
   const [page, setPage] = useState(1);
+
+  const languageNameInput = useRef(null);
+  const repoNameInput = useRef(null);
 
   const getData = async () => {
     const githubUrl = "https://api.github.com";
@@ -34,6 +37,15 @@ const Search = ({ setList }) => {
     getData();
   };
 
+  const clearForm = () => {
+    repoNameInput.current.value = "";
+    languageNameInput.current.value = "";
+    setList("");
+    setRepoName("");
+    setRepoLanguage("");
+    setPage(1);
+  };
+
   const handleRepo = (e, setRep) => {
     const name = e.target.value;
     const pattern = /[.A-Za-z0-9_-]/;
@@ -46,6 +58,8 @@ const Search = ({ setList }) => {
       } else {
         setRep(name);
       }
+    } else if (name === "") {
+      setRep("");
     }
   };
 
@@ -88,6 +102,9 @@ const Search = ({ setList }) => {
               value={repoName}
               onChange={handleRepoName}
               placeholder="pop-os/pop"
+              name="repoName"
+              id="repoName"
+              ref={repoNameInput}
             />
           </label>
           <label>
@@ -97,9 +114,16 @@ const Search = ({ setList }) => {
               value={repoLanguage}
               onChange={handleRepoLanguage}
               placeholder="javascript"
+              name="languageName"
+              id="languageName"
+              ref={languageNameInput}
             />
           </label>
-          <button type="submit">Search Repo</button>
+
+          <div className="buttonRow">
+            <button type="submit">Search Repo</button>
+            <button onClick={clearForm}>Clear</button>
+          </div>
         </fieldset>
       </form>
     </div>
