@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef } from "react";
+import React, { useState, useEffect, useRef, useCallback } from "react";
 import "./search.css";
 
 /****************************************************************
@@ -13,28 +13,52 @@ const Search = ({ setList }) => {
   const languageNameInput = useRef(null);
   const repoNameInput = useRef(null);
 
-  const getData = async () => {
+  /* 
+  Every time page is changed its new value is stored in a useRef.
+
+  Set a variable to be this useRef current value
+
+  In the useEffect that checks page change (it requires multiple dependancies); 
+    Thus compare current and present page value to test if new data should be checked
+
+  */
+
+  const prevPageRef = useRef();
+  useEffect(() => {
+    prevPageRef.current = page; // save current page
+  }, [page]);
+
+  const prevPageIs = prevPageRef.current;
+
+  const fetchData = useCallback(async () => {
     const githubUrl = "https://api.github.com";
     const gitData = await fetch(
       `${githubUrl}/search/repositories?q=${repoName}+language:${repoLanguage}&sort=stars&order=desc&per_page=10&page=${page}`
-      // {
-      //   headers: {
-      //     authorization: process.env.REACT_APP_TOKEN,
-      //   },
-      // }
     );
     const content = await gitData.json();
     setList(content);
-  };
+  }, [page, repoLanguage, repoName, setList]);
 
   // Page change needs refreshing
   useEffect(() => {
-    getData();
-  }, [page]);
+    let mounted = true;
+
+    if (mounted) {
+      if (repoName !== "") {
+        // only fetch data if page has changed and not the other dependancies
+        if (prevPageIs !== page) {
+          fetchData();
+        }
+      }
+    }
+    return () => {
+      mounted = false;
+    };
+  }, [fetchData, page, repoLanguage, repoName, setList, prevPageIs]);
 
   const handleRepoSearch = (e) => {
     e.preventDefault();
-    getData();
+    fetchData();
   };
 
   const clearForm = () => {
