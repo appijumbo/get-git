@@ -13,16 +13,6 @@ const Search = ({ setList }) => {
   const languageNameInput = useRef(null);
   const repoNameInput = useRef(null);
 
-  /* 
-  Every time page is changed its new value is stored in a useRef.
-
-  Set a variable to be this useRef current value
-
-  In the useEffect that checks page change (it requires multiple dependancies); 
-    Thus compare current and present page value to test if new data should be checked
-
-  */
-
   const prevPageRef = useRef();
   useEffect(() => {
     prevPageRef.current = page; // save current page
